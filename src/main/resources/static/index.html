@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Document</title>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+<link rel="stylesheet" href="//unpkg.com/iview/dist/styles/iview.css">
+<script src="//unpkg.com/iview/dist/iview.min.js"></script>
+</head>
+<body>
+	<div id="app">
+		<Upload :before-upload="handleUpload" action="">
+		<Button icon="ios-cloud-upload-outline">Upload files</Button>
+		</Upload>
+	</div>
+	<script>
+        new Vue({
+            el: '#app',
+            data: {
+                visible: false
+            },
+            methods: {
+                show: function () {
+                    this.visible = true;
+                },
+                handleUpload(file) {
+                    let param = new FormData(); 
+                    param.append('file',file);
+                    let config = {
+                        headers:{'Content-Type':'multipart/form-data'}
+                    };
+                    // debugger
+                    axios.post('http://localhost:8888/Upload', param, config).then(function (response) {
+                        console.log(response.data);
+                    }).catch(function (error) {
+                        console.log(error);
+                    }).then(function () {
+                    });
+                    return false;
+                }
+            },
+            
+        })
+    </script>
+</body>
+</html>
